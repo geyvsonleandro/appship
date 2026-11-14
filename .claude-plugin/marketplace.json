@@ -1,0 +1,13 @@
+{
+  "name": "geyvsonleandro",
+  "owner": {
+    "name": "Geyvson Leandro, Engenheiro de IA"
+  },
+  "plugins": [
+    {
+      "name": "appship",
+      "source": "./",
+      "description": "Appship by GG: leva seu app Expo do código até a loja."
+    }
+  ]
+}
