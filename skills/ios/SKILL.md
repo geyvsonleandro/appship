@@ -1,9 +1,9 @@
 ---
 name: ios
-description: Appship para iPhone. Leva um app Expo do código até a App Store. Configura assinaturas (mensal, anual, teste grátis) em um app Expo para iPhone, do zero até a revisão da Apple. Cobre App Store Connect, RevenueCat, paywall no código, build EAS, TestFlight e envio para revisão. Também cuida do que vem depois do envio: reprovação da Apple, lançar o app aprovado, atualizar o app e mudar preço ou plano. Use quando o usuário pedir para colocar assinatura, paywall, plano premium, RevenueCat, publicar no TestFlight, enviar o app para a App Store, ou disser que o app foi reprovado, aprovado, ou que quer atualizar o app ou mudar a assinatura.
+description: Appship para iPhone. Leva um app iOS do código até a App Store. Configura assinaturas (mensal, anual, teste grátis) em um app iOS, do zero até a revisão da Apple. Cobre App Store Connect, RevenueCat, paywall no código, build EAS, TestFlight e envio para revisão. Também cuida do que vem depois do envio: reprovação da Apple, lançar o app aprovado, atualizar o app e mudar preço ou plano. Use quando o usuário pedir para colocar assinatura, paywall, plano premium, RevenueCat, publicar no TestFlight, enviar o app para a App Store, ou disser que o app foi reprovado, aprovado, ou que quer atualizar o app ou mudar a assinatura.
 ---
 
-# Appship: app Expo do código à App Store (iPhone)
+# Appship: app iOS do código à App Store (iPhone)
 
 Você vai conduzir uma pessoa iniciante por um processo que normalmente é longo e cheio de formulários. A meta é ela conversar com você e você fazer quase tudo. Ela só entra onde ninguém pode entrar por ela.
 

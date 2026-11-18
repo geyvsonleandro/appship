@@ -1,6 +1,6 @@
 # Appship by GG
 
-Leva seu app Expo do código até a loja, conversando com o Claude. Ele configura as assinaturas (mensal, anual, teste grátis), o paywall e o RevenueCat, gera o build, coloca no TestFlight, preenche a página da loja, faz uma autorrevisão antes do envio e cuida do que vem depois (reprovação, lançamento, atualização, mudança de preço).
+Leva seu app iOS ou Android do código até a loja, conversando com o Claude. Ele configura as assinaturas (mensal, anual, teste grátis), o paywall e o RevenueCat, gera o build, coloca no TestFlight, preenche a página da loja, faz uma autorrevisão antes do envio e cuida do que vem depois (reprovação, lançamento, atualização, mudança de preço).
 
 Criado por **Geyvson Leandro, Engenheiro de IA**.
 
