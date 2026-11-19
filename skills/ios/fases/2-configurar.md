@@ -33,15 +33,11 @@ Confirme com `node <skill>/scripts/asc.mjs check`. Tem que listar os apps da con
 
 Verifique se você tem as ferramentas do RevenueCat (nomes como `list-projects`, `create-project`). O ideal é isso já ter sido resolvido no aviso inicial da Fase 1. Se não tiver, peça ao usuário para instalar o plugin oficial e reiniciar o Claude Code:
 
-1. **Caminho principal:** dentro do chat do Claude Code, `/plugin` > Marketplace > adicionar `RevenueCat/ai-toolkit` > instalar **RevenueCat**.
-2. **Pelo terminal** (só se o comando `claude` existir no terminal; no VS Code do Windows costuma não existir):
+1. **VS Code:** no chat, digitar `/plugins` > **Manage plugins** > aba **Plugins** > procurar `revenuecat` > **Install** no que diz "Set up RevenueCat, integrate it, and access data". Instalar só um. (No VS Code, `/plugin` sem o "s" não funciona.)
+2. **Claude Code no terminal:** `/plugin` > procurar RevenueCat > instalar.
+3. Depois, abrir uma conversa nova e chamar a skill de novo. O andamento fica salvo.
 
-```
-claude plugins marketplace add RevenueCat/ai-toolkit
-claude plugins install RevenueCat
-```
-
-Se depois de reiniciar as ferramentas não aparecerem, confira o `~/.claude/settings.json`: precisa ter `"enabledPlugins": { "revenuecat@RevenueCat": true }` (o nome exato aparece em `/plugin`). Se faltar, ofereça acrescentar e reiniciar de novo.
+Se na conversa nova as ferramentas não aparecerem, confira em `/plugins` (ou `/plugin`) se o RevenueCat está como instalado e ligado. Se só o catálogo foi adicionado e o plugin não, instale pela aba **Plugins**. Em último caso, confira o `~/.claude/settings.json`: precisa ter o plugin em `"enabledPlugins"` (o nome exato aparece na lista de plugins).
 
 Na primeira chamada abre o navegador para o usuário autorizar o acesso.
 

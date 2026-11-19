@@ -33,7 +33,7 @@ Descubra e anote em `.assinaturas/estado.json`:
 | O que o app coleta | E-mail, fotos, localização, saúde, contatos. Para onde envia (IA, analytics, anúncios) |
 | Git | Existe e funciona (`git status` sem erro)? Está limpo? Existe commit recente? O EAS exige Git. Se não houver Git válido, proponha `git init` com o `.gitignore` conferido antes (assim `.env` e `.assinaturas/` não sobem) e um backup em zip da pasta, se o `.git` estiver quebrado |
 | Máquina | `node --version`, Windows ou Mac |
-| Android | Existe `expo.android.package`? Só anote. Esta skill cuida do iPhone |
+| Android | Existe `expo.android.package`? Só anote. Esta skill cuida do iPhone; o Android é com a skill `android` do Appship (`/appship:android`) |
 
 Se não for um projeto Expo, pare e avise que esta skill só cobre Expo.
 
