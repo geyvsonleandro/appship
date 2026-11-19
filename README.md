@@ -5,11 +5,11 @@ Leva seu app iOS ou Android do código até a loja, conversando com o Claude. El
 Criado por **Geyvson Leandro, Engenheiro de IA**.
 
 Versão 1.0.0.
+
 | Plataforma | Comando |
 |---|---|
 | iPhone (App Store) | `/appship:ios` |
 | Android (Google Play) | `/appship:android` |
-| Android (Google Play) | `/appship:android` | Testado em conta real do Google até a compra de teste no celular |
 
 ## Instalar
 
