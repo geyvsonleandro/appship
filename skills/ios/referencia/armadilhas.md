@@ -43,7 +43,7 @@ Erros reais que já aconteceram neste processo. Confira aqui antes de investigar
 | Sintoma | Causa | Solução |
 |---|---|---|
 | Build falha em "Install dependencies" com `npm ci` e "Missing ... from lock file" | Node do servidor EAS diferente do Node da máquina | Fixar `"node": "<versão local>"` no perfil do `eas.json` |
-| App do build sem as chaves | `.env` não sobe no build | Cadastrar as variáveis com `eas env:create` e usar `"environment": "production"` |
+| App do build sem as chaves | `.env` não sobe no build | Cadastrar as variáveis com `eas env:set` e usar `"environment": "production"` |
 | QR code não abre mais no Expo Go | `expo-dev-client` instalado | Desinstalar, se o usuário testa pelo Expo Go |
 | Mudou o `.env` e o app não percebeu | Cache | `npx expo start --clear` |
 | Lint quebra com "Cannot find native binding" no Windows | Falta o Visual C++ Redistributable x64 | Instalar. Não é problema do código |

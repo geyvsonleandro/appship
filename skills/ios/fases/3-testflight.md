@@ -28,7 +28,7 @@ Se já existir `eas.json`, só acrescente o que falta. Não apague outros perfis
 O `.env` não sobe no build. Cadastre no ambiente `production` cada variável `EXPO_PUBLIC_*` que o app usa:
 
 ```
-npx eas-cli@latest env:create --environment production --name NOME --value VALOR --visibility plaintext
+npx eas-cli@latest env:set --environment production --name NOME --value VALOR --visibility plaintext
 ```
 
 Inclua `EXPO_PUBLIC_REVENUECAT_IOS_KEY`. **Nunca cadastre a `test_`**: build real com chave de teste fecha sozinho ao abrir.

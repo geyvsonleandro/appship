@@ -1,6 +1,6 @@
 # Fase 3: Build e teste interno
 
-Comandos que fazem perguntas (login, chave de assinatura) precisam ser rodados **pelo usuário no terminal dele**. Você entrega o comando pronto e diz o que responder em cada pergunta. Os outros você mesmo roda.
+Comandos que pedem senha ou login precisam ser rodados **pelo usuário no terminal dele**. Você entrega o comando pronto e diz o que responder. Os outros, inclusive o build, você mesmo roda.
 
 ## 1. Projeto EAS
 
@@ -39,8 +39,10 @@ Se já existir `eas.json` (por exemplo, da skill `ios`), só acrescente o que fa
 O `.env` não sobe no build. Cadastre no ambiente `production` cada variável `EXPO_PUBLIC_*` que o app usa e que ainda não está lá:
 
 ```
-npx eas-cli@latest env:create --environment production --name NOME --value VALOR --visibility plaintext
+npx eas-cli@latest env:set --environment production --name NOME --value VALOR --visibility plaintext
 ```
+
+O `env:create` ainda funciona, mas a Expo avisa que está obsoleto e manda usar o `env:set`. Se o `env:set` recusar alguma opção, confira com `npx eas-cli@latest env:set --help`.
 
 Inclua `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY`. **Nunca cadastre a chave da Test Store**: build real com chave de teste fecha sozinho ao abrir.
 
@@ -50,14 +52,13 @@ Confira com `npx eas-cli@latest env:list production --format short`.
 
 **Antes de qualquer build, confira o ícone.** Abra a imagem de `expo.icon` (e `android.adaptiveIcon`, se houver). Se for o de exemplo do Expo, **não rode o build**. Build com ícone errado custa um build novo.
 
-Usuário roda: `npx eas-cli@latest build -p android --profile production`
+Você roda (o usuário já precisa estar logado na Expo):
 
-Diga o que responder:
+`npx eas-cli@latest build -p android --profile production --non-interactive --no-wait`
 
-| Pergunta | Resposta |
-|---|---|
-| Generate a new Android Keystore? | **Yes**. O EAS cria e guarda a chave de assinatura do app. Avise: essa chave assina todas as versões; ela fica guardada na Expo, e dá para baixar uma cópia com `eas credentials` |
-| Outras perguntas | Se aparecer algo fora desta lista, peça um print antes de responder |
+No primeiro build, o EAS cria sozinho a chave de assinatura do Android e guarda na Expo, sem perguntar nada. Avise o usuário em uma frase: essa chave assina todas as versões do app; fica guardada na Expo, e dá para baixar uma cópia com `eas credentials`.
+
+Se o comando parar pedindo algo que só o usuário pode responder (login, por exemplo), entregue o comando sem `--non-interactive` para ele rodar no terminal e peça um print da pergunta antes de dizer o que responder.
 
 O build leva de 10 a 20 minutos e gera um arquivo `.aab` (o formato que o Google aceita). Acompanhe com `npx eas-cli@latest build:list --platform android --limit 1 --json --non-interactive`.
 
@@ -65,15 +66,13 @@ Se falhar, pegue o log (`npx eas-cli@latest build:view <id> --json`) e leia a fa
 
 ## 4. Envio para o teste interno
 
-Usuário roda (ou você, já que não faz perguntas): `npx eas-cli@latest submit -p android --latest --profile production`
+Você roda: `npx eas-cli@latest submit -p android --latest --profile production`
 
 Ele usa a chave do Google do `eas.json` e manda o build para a faixa de **teste interno**, como rascunho. Leia https://docs.expo.dev/submit/android/ se aparecer pergunta nova.
 
 - Se der erro de que o app não foi encontrado: confira se o app foi criado no Play Console (Fase 2, passo 1) com a mesma conta e se o pacote é igual ao do `app.json`.
 - Se der erro de permissão: a conta de serviço precisa de "Lançar apps para faixas de teste" (Fase 2, passo 2), e pode demorar para valer.
 - **Plano B, envio pela tela:** baixe o `.aab` na página do build (link que o EAS mostra) e, no Play Console > app > **Testar e lançar** > **Teste interno** > **Criar nova versão**, envie o arquivo.
-
-Depois do envio, o pacote fica preso a este app para sempre.
 
 **Agora crie as assinaturas no Google:** volte ao passo 7 de `fases/2-configurar.md`. O build não precisa ser refeito: o app busca os planos na hora em que abre.
 
@@ -85,7 +84,8 @@ Depois do envio, o pacote fica preso a este app para sempre.
 3. Copiar o **link de participação** que aparece nessa aba.
 
 **Teste de licença** (compra sem cobrança):
-4. Play Console > **Gerenciar conta** > Configurações do app Google Play > **Teste de licença**. Acrescentar o mesmo e-mail e salvar. A conta dona do Play Console já é testadora de licença.
+4. Play Console > **Gerenciar conta** > Configurações do app Google Play > **Teste de licença**. Marque a lista de e-mails criada acima (ou acrescente o e-mail) > **Salvar alterações** > confirme em **Salvar** na janela que abre. Recarregue a página e confira que a lista ficou marcada: se recarregar antes de confirmar, a mudança se perde.
+5. **Faça isso sempre, mesmo que o e-mail seja o dono do Play Console.** O dono **não** vira testador de licença sozinho. Sem esse passo, a compra mostra só Pix e cartão de verdade.
 
 Leia https://support.google.com/googleplay/android-developer/answer/6062777 se a tela estiver diferente.
 
@@ -104,10 +104,17 @@ Leia https://support.google.com/googleplay/android-developer/answer/6062777 se a
 Confira com ele:
 - Preços em **reais**, iguais aos definidos.
 - Texto do teste grátis correto.
-- Ao tocar em assinar, abre a folha do Google Play. A forma de pagamento deve ser um **cartão de teste** ("Instrumento de teste, sempre aprova"). Se aparecer só cartão de verdade, a conta não está no teste de licença: pare e confira o passo 5.
+- Ao tocar em assinar, abre a folha do Google Play. A forma de pagamento deve ser um **cartão de teste** ("Cartão de teste, sempre aprova"; o nome pode variar).
+
+**Se aparecerem só Pix e cartão de verdade:** diga para **não confirmar** (seria compra de verdade). Então:
+1. Confira no Play Console que a lista está marcada e salva em Teste de licença (passo 5).
+2. No celular: **Configurações > Apps > Google Play Store > Forçar parada**, depois **Armazenamento > Limpar dados**. Os dados, não só o cache: só limpar o cache não resolveu no teste. Não apaga nada da pessoa, só reinicia a Play Store.
+3. **Forçar parada** também no app.
+4. Esperar uns **15 minutos** e tentar de novo. Desinstalar o app não ajuda: o teste de licença fica na conta Google, não no app.
 
 Antes dele confirmar a compra, avise:
 - Com o cartão de teste não há cobrança.
+- **O premium vai sumir sozinho em uns 30 a 40 minutos.** A assinatura de teste se cancela depois de algumas renovações. Não é erro: para testar de novo, é só assinar de novo.
 - Na compra de teste, o tempo anda mais rápido: segundo o Google (developer.android.com/google/play/billing/test), o teste grátis dura cerca de 3 minutos, o plano mensal renova a cada 5 minutos e o anual a cada 30, até 6 renovações. Confira na página, porque os tempos podem mudar.
 
 Peça **um print do paywall** e salve em `.assinaturas/paywall-android.png`.

@@ -7,21 +7,21 @@ A ordem importa:
 
 Se o app **já existe** no Play Console e já tem build enviado, faça o passo 7 aqui mesmo.
 
-## 1. Criar o app no Play Console (o usuário faz, uma vez por app)
+## 1. Criar o app no Play Console (pela tela, uma vez por app)
 
 Pela tela. Se houver navegador (Claude in Chrome) e o usuário estiver logado, preencha você e deixe as declarações para ele. Senão, guie um clique por vez. Leia na hora a ajuda "Criar e configurar seu app" (support.google.com/googleplay/android-developer) se a tela estiver diferente.
 
 1. Play Console > página inicial > **Criar app**.
-2. **Nome do app** (até 30 caracteres; dá para mudar depois).
+2. **Nome do app** (até 30 caracteres; dá para mudar depois) e **nome do pacote**, igual ao `expo.android.package`. Confira duas vezes: o pacote fica ligado a este app para sempre.
 3. **Idioma padrão:** o da loja principal (ex.: Português (Brasil) – pt-BR). Anote em `.assinaturas/estado-android.json`: os textos das assinaturas precisam ter esse idioma.
 4. **App ou jogo:** App.
 5. **Gratuito ou pago:** **Gratuito** (o dinheiro vem da assinatura). Explique em uma frase: "Gratuito é o preço de baixar. A assinatura tem preço próprio lá dentro. E um app gratuito não pode virar pago depois."
 6. **Declarações** (políticas do programa para desenvolvedores, leis de exportação dos EUA): quem marca é o usuário. Explique em uma frase o que cada uma diz.
 7. **Criar app**.
 
-Anote o pacote que vai ser usado (`expo.android.package`). O pacote só fica preso ao app no primeiro envio de build.
+Anote em `.assinaturas/estado-android.json` o pacote e o ID do app que aparece no endereço do Play Console.
 
-## 2. Chave do Google: conta de serviço (o usuário faz, uma vez por conta)
+## 2. Chave do Google: conta de serviço (pela tela, uma vez por conta)
 
 É o equivalente às chaves da Apple. **Uma chave só serve para três coisas:** você configurar o Google pelo script, o EAS enviar o build e o RevenueCat validar as compras. Crie a pasta `.assinaturas/` e adicione `.assinaturas/` ao `.gitignore` antes de tudo.
 
@@ -34,7 +34,7 @@ Guie o usuário, um passo por vez (ou faça pelo navegador, se tiver a ferrament
 **No Google Cloud** (https://console.cloud.google.com):
 1. Criar um projeto (ex.: `<app>-play`). Pode ser um só para todos os apps do usuário.
 2. Ativar as APIs (menu **APIs e serviços** > **Biblioteca**): **Google Play Android Developer API**, **Google Play Developer Reporting API** e **Cloud Pub/Sub API**.
-3. **IAM e administrador** > **Contas de serviço** > **Criar conta de serviço**. Nome: `appship-play`.
+3. **IAM e administrador** > **Contas de serviço** > **Criar conta de serviço**. Nome: `appship-play`. Deixe a descrição vazia: pelo navegador, digitar nesse campo já fez a página mudar sozinha.
 4. Papéis da conta de serviço (o RevenueCat usa para as notificações): **Editor do Pub/Sub** e **Leitor do Monitoring**.
 5. Abrir a conta criada > aba **Chaves** > **Adicionar chave** > **Criar nova chave** > **JSON**. O arquivo baixa sozinho. Ele dá acesso à conta: não mande para ninguém nem coloque no Git.
 6. Anotar o **e-mail da conta de serviço** (termina em `.iam.gserviceaccount.com`, também está dentro do arquivo, no campo `client_email`).
@@ -70,7 +70,7 @@ Com as ferramentas do RevenueCat (confira os parâmetros no esquema de cada uma)
 5. RevenueCat > projeto > **Apps** > app da Play Store > campo **Service Account Credentials JSON**: arrastar o `google-play-key.json` e salvar. Faça pelo navegador (o envio do arquivo é do usuário) ou guie.
 6. Avise: o próprio RevenueCat diz que **pode levar até 36 horas** para a chave nova funcionar. Até lá aparece "Invalid Play Store credentials". Isso não impede seguir: o resto da configuração continua. Confira depois com `validate-app-credentials` ou no selo da tela.
 
-**Notificações do Google para o RevenueCat** (deixam o RevenueCat saber na hora de renovações e cancelamentos):
+**Notificações do Google para o RevenueCat** (deixam o RevenueCat saber na hora de renovações e cancelamentos). **Faça depois que a chave for validada** (passo 6): logo após enviar a chave, o "Connect to Google" não respondeu. Se ainda não validou, anote como pendência e siga; volte aqui antes da Fase 4. Não impede o teste de compra.
 7. RevenueCat > app da Play Store > **Google developer notifications** > **Connect to Google** > copiar o **Topic ID** gerado.
 8. Play Console > app > **Monetizar com o Google Play** > **Configuração de monetização** > **Notificações do desenvolvedor em tempo real**: colar o tópico, escolher "Assinaturas, compras anuladas e todos os produtos de compra única" e salvar.
 9. Clicar em **Enviar notificação de teste** e conferir no RevenueCat o "Last received" com horário recente. Se falhar, siga a fonte do RevenueCat (dar o papel "Publicador do Pub/Sub" a `google-play-developer-notifications@system.gserviceaccount.com` no tópico).
@@ -129,7 +129,7 @@ Funções necessárias: configurar o SDK uma vez na abertura do app; ler a offer
 - **Termos de Uso** e **Política de Privacidade:** os mesmos links do paywall.
 - **Excluir conta** (se o app cria conta): discreto, mas visível, no fim da tela. Pede confirmação, apaga a conta de verdade, chama `logOut` do RevenueCat e volta para o início. Na confirmação, avise que a assinatura não é cancelada sozinha e mostre como cancelar no Android (Play Store > foto do perfil > Pagamentos e assinaturas > Assinaturas). No Supabase, o app não apaga o próprio usuário com a chave pública: crie uma função no servidor (Edge Function com a chave secreta). **O Google também exige um link na web** para pedir a exclusão (Fase 4, seção 2).
 
-Se o usuário preferir, registre o que faltar como pendência obrigatória da Fase 4 em vez de fazer agora.
+Se o usuário preferir, registre o que faltar como pendência obrigatória da Fase 4 em vez de fazer agora. No teste interno o Google não analisa o app, então a exclusão de conta (a função no servidor e a página na web) pode esperar; ela passa a ser obrigatória no teste fechado e na produção.
 
 **Permissões:** aplique o que a Fase 1 achou. Desligue as que o app não usa (opção da biblioteca ou `android.blockedPermissions` no `app.json`). Nunca bloqueie `com.android.vending.BILLING`.
 
@@ -177,6 +177,16 @@ Rode `node <skill>/scripts/gplay.mjs sub-setup .assinaturas/assinaturas-android.
 Confira com `sub-status <pacote>`: cada plano `ACTIVE`, preço do Brasil certo, oferta de teste `ACTIVE`, e o `idRevenueCat` igual aos produtos do passo 4.
 
 Se o Google recusar o formato (por exemplo, a versão de regiões), leia a mensagem, confira em https://developers.google.com/android-publisher/api-ref/rest/v3/monetization.subscriptions e ajuste o JSON ou o script.
+
+**Se der 403 ("The caller does not have permission")** em `prices` ou `sub-setup`, mesmo com as permissões certas e o build enviado: é demora do Google para liberar a escrita de assinaturas a uma conta de serviço nova. Já passou de 1 hora num teste real. Não espere: faça pela tela (pelo navegador, se tiver; senão, um clique por vez). A leitura costuma funcionar, então o `sub-status` serve para conferir no fim.
+
+Pela tela (Play Console > app > **Monetizar com o Google Play** > **Produtos** > **Assinaturas**):
+1. **Criar assinatura**: ID `premium` (o mesmo do JSON) e nome. Preencha benefícios e descrição no idioma padrão. Salvar.
+2. **Adicionar plano base**: ID `mensal`, renovação automática, período mensal, carência (ex.: 3 dias).
+3. Preço: **Definir preços** > selecionar **todos** os países > **Definir preço** com o valor em BRL. O Google converte e **arredonda o Brasil** (ex.: 29,90 vira 29,99). Edite a célula do Brasil, coloque o valor exato e confira na tabela.
+4. **Salvar** e **Ativar** o plano. Repita para `anual`.
+5. Em cada plano: **Adicionar oferta**, ID `teste-gratis-3d` (ou outro, se já usado), qualificação "Nova aquisição de cliente" (só quem nunca assinou), fase **Teste sem custo financeiro** com a duração escolhida. **O campo de duração já vem preenchido e digitar acrescenta** (3 virou 13, depois 1 dia): selecione tudo antes de digitar e confira na tabela de fases. Salvar e **Ativar**.
+6. Confira com `sub-status <pacote>`: planos e ofertas `ACTIVE`, preço do Brasil exato.
 
 Mande o link para o usuário ver: Play Console > app > **Monetizar com o Google Play** > **Produtos** > **Assinaturas**.
 

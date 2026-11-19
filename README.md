@@ -9,7 +9,7 @@ Versão 1.0.0.
 | Plataforma | Comando | Situação |
 |---|---|---|
 | iPhone (App Store) | `/appship:ios` | Testado em conta real da Apple até antes do envio para revisão |
-| Android (Google Play) | `/appship:android` | Em validação |
+| Android (Google Play) | `/appship:android` | Testado em conta real do Google até a compra de teste no celular |
 
 ## Instalar
 
@@ -29,7 +29,12 @@ Depois, abra uma conversa nova dentro do projeto do seu app e digite `/appship:i
 
 ## Receber as atualizações
 
-**No VS Code:** `/plugins` > **Manage plugins** > aba **Marketplaces** > ícone de atualizar (↻) ao lado de `geyvsonleandro`. Depois, na aba **Plugins**, o mesmo ícone ao lado de `appship`. Abra uma conversa nova para usar a versão nova.
+**No VS Code ou no app Claude** (no VS Code, digite `/plugins`; no app, botão **+** > **Plugins**). Abra **Manage plugins** e tente nesta ordem:
+
+1. **Atualizar:** aba **Plugins** > ícone de atualizar (↻) ao lado de `appship`.
+2. **Se não atualizar, desinstale e instale de novo:** aba **Marketplaces** > ↻ ao lado de `geyvsonleandro` (para a lista pegar a versão nova). Depois, aba **Plugins** > remova o `appship` > instale de novo (**Install for you**).
+
+Depois, abra uma conversa nova para usar a versão nova.
 
 **No terminal:** ligue uma vez `/plugin` > **Marketplaces** > `geyvsonleandro` > **Enable auto-update**, ou atualize quando quiser em `/plugin` > **Installed** > `appship` > **Update now**.
 

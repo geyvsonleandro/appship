@@ -27,8 +27,8 @@ Fale em português simples. Frases curtas. Nada de jargão sem explicar. Uma per
 Avise logo no começo, de uma vez, para ele não ser surpreendido:
 
 1. Conta de desenvolvedor no **Google Play Console** (paga uma vez), com a **verificação do aparelho Android** feita e o **perfil de pagamentos** criado (pré-requisitos).
-2. **Criar o app no Play Console** e aceitar as declarações (você guia ou preenche pela tela; as declarações são dele).
-3. **Criar a chave do Google** (conta de serviço no Google Cloud) e baixar o arquivo. Você guia clique por clique.
+2. **Estar logado no Play Console e no Google Cloud** no Chrome. Com a extensão Claude in Chrome, você cria o app e a chave do Google pela tela; sem ela, guia clique por clique.
+3. **Marcar as declarações** ao criar o app (são dele).
 4. Ter conta no **RevenueCat** e autorizar a conexão.
 5. **Login na Expo** no terminal.
 6. Testar no **celular Android** pelo teste interno e tirar **um print do paywall**.
